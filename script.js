@@ -1,1 +1,1 @@
-. 
+console.log("KINGSCAPE READY");
