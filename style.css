@@ -1,1 +1,232 @@
-. 
+/* =========================
+   KINGSCAPE STYLE
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0a0a0a;
+    color:#ffffff;
+    font-family:Arial, Helvetica, sans-serif;
+    line-height:1.6;
+}
+
+/* NAVBAR */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:#111111;
+    border-bottom:1px solid #222;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:2rem;
+    font-weight:900;
+    color:#d90429;
+    letter-spacing:2px;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+    list-style:none;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    color:#d90429;
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:60px 8%;
+    gap:50px;
+}
+
+.hero-content{
+    flex:1;
+}
+
+.hero-content h1{
+    font-size:5rem;
+    font-weight:900;
+    color:white;
+}
+
+.hero-content h2{
+    font-size:2rem;
+    color:#d90429;
+    margin-bottom:20px;
+}
+
+.hero-content p{
+    font-size:1.2rem;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:15px 30px;
+    background:#d90429;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#ef233c;
+}
+
+.hero-image{
+    flex:1;
+}
+
+.hero-image img{
+    width:100%;
+    max-width:650px;
+    display:block;
+    margin:auto;
+    border-radius:20px;
+}
+
+/* SECTIONS */
+
+section{
+    padding:80px 8%;
+}
+
+section h2{
+    text-align:center;
+    font-size:2.5rem;
+    margin-bottom:30px;
+    color:#d90429;
+}
+
+section p{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+}
+
+/* ABOUT */
+
+#about img{
+    width:100%;
+    max-width:450px;
+    display:block;
+    margin:40px auto;
+}
+
+/* HOW TO PLAY */
+
+.step{
+    background:#151515;
+    margin:20px auto;
+    max-width:700px;
+    padding:20px;
+    border-left:5px solid #d90429;
+    border-radius:10px;
+    text-align:center;
+}
+
+/* RULES */
+
+.rule{
+    background:#151515;
+    margin:20px auto;
+    max-width:900px;
+    padding:25px;
+    border-radius:15px;
+    border:1px solid #222;
+}
+
+.rule h3{
+    color:#d90429;
+    margin-bottom:10px;
+}
+
+/* CONTACT */
+
+#contact{
+    text-align:center;
+}
+
+#contact p{
+    margin-bottom:15px;
+}
+
+/* LEGAL */
+
+.legal{
+    background:#111;
+    text-align:center;
+}
+
+.legal h2{
+    color:#ff4d4d;
+}
+
+/* FOOTER */
+
+footer{
+    background:black;
+    text-align:center;
+    padding:30px;
+    border-top:1px solid #222;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .hero{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .hero-content h1{
+        font-size:3rem;
+    }
+
+    .hero-content h2{
+        font-size:1.5rem;
+    }
+
+    .navbar{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .nav-links{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+}
