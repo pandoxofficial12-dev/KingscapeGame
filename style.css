@@ -173,8 +173,8 @@ transform:scale(1.01);
 
 .rules-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+gap:25px;
 margin-top:40px;
 }
 
@@ -209,17 +209,17 @@ color:#d8d8d8;
 
 .rule-image{
 width:100%;
-height:280px;
-object-fit:cover;
+height:auto;
 display:block;
 border-radius:15px;
-margin-bottom:12px;
+margin-bottom:15px;
 transition:.35s;
 box-shadow:0 5px 20px rgba(0,0,0,.5);
 }
 
 .rule-image:hover{
-transform:scale(1.04);
+transform:scale(1.02);
+box-shadow:0 0 25px rgba(255,0,0,.35);
 }
 
 /* LEGACY RULES */
@@ -297,4 +297,5 @@ padding:16px;
 .rule-image{
 height:auto;
 }
+
 }
