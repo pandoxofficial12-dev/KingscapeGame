@@ -134,7 +134,7 @@ gap:25px;
 margin:40px 0;
 }
 
-/* CARDS */
+/* STANDARD CARDS */
 
 .card{
 background:linear-gradient(
@@ -159,7 +159,7 @@ border-color:rgba(255,0,0,.25);
 margin-bottom:12px;
 }
 
-/* IMAGES */
+/* MAIN IMAGES */
 
 .full-image{
 width:100%;
@@ -173,7 +173,62 @@ transition:.4s;
 transform:scale(1.01);
 }
 
-/* RULES */
+/* GAME RULES GRID */
+
+.rules-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:25px;
+margin-top:40px;
+}
+
+.rule-card{
+background:linear-gradient(
+180deg,
+#181818,
+#0d0d0d
+);
+padding:25px;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.08);
+text-align:left;
+transition:.35s;
+overflow:hidden;
+}
+
+.rule-card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 25px rgba(255,0,0,.25);
+border-color:rgba(255,0,0,.25);
+}
+
+.rule-card h3{
+color:#ff2a2a;
+margin-bottom:15px;
+}
+
+.rule-card p{
+margin-bottom:10px;
+color:#d8d8d8;
+}
+
+/* RULE CARD IMAGES */
+
+.rule-image{
+width:100%;
+display:block;
+border-radius:15px;
+margin-bottom:15px;
+box-shadow:0 0 20px rgba(255,0,0,.25);
+transition:.35s;
+}
+
+.rule-image:hover{
+transform:scale(1.03);
+box-shadow:0 0 35px rgba(255,0,0,.45);
+}
+
+/* OLD RULES STYLE */
 
 .rules{
 display:grid;
@@ -236,47 +291,12 @@ width:90%;
 max-width:300px;
 }
 
-}
-
 .rules-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:25px;
-margin-top:40px;
+grid-template-columns:1fr;
 }
 
 .rule-card{
-background:linear-gradient(180deg,#181818,#0d0d0d);
-padding:25px;
-border-radius:18px;
-border:1px solid rgba(255,255,255,.08);
-text-align:left;
-transition:.35s;
+padding:20px;
 }
 
-.rule-card:hover{
-transform:translateY(-8px);
-box-shadow:0 0 25px rgba(255,0,0,.25);
-border-color:rgba(255,0,0,.25);
-}
-
-.rule-card h3{
-color:#ff2a2a;
-margin-bottom:15px;
-}
-
-.rule-card p{
-margin-bottom:10px;
-color:#d8d8d8;
-}
-.rule-image{
-width:100%;
-border-radius:15px;
-margin-bottom:15px;
-box-shadow:0 0 20px rgba(255,0,0,.25);
-transition:.3s;
-}
-
-.rule-image:hover{
-transform:scale(1.03);
 }
