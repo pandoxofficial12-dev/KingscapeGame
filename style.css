@@ -361,3 +361,21 @@ font-weight:bold;
 color:white;
 cursor:pointer;
 }
+.card-counter{
+    text-align:center;
+    margin:25px 0;
+}
+
+.counter-number{
+    font-size:70px;
+    font-weight:900;
+    color:#ff0000;
+    line-height:1;
+}
+
+.counter-text{
+    font-size:18px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:0.8;
+}
