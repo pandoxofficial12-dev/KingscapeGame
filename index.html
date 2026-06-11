@@ -1,627 +1,852 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kingscape is the ultimate party card game. Challenge your friends, create unforgettable memories and Respect The Cup." />
+  <meta property="og:title" content="KINGSCAPE | Respect The Cup" />
+  <meta property="og:description" content="The Ultimate Party Card Game for unforgettable nights." />
+  <meta property="og:image" content="banner.png" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#C8102E" />
+  <title>KINGSCAPE — Respect The Cup</title>
 
-<meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<title>KINGSCAPE - The Ultimate Party Card Game</title>
+    :root {
+      --black:   #080808;
+      --deep:    #111111;
+      --card-bg: #161616;
+      --red:     #C8102E;
+      --red-dim: #8a0b1f;
+      --gold:    #D4AF37;
+      --gold-dim:#8a6f1a;
+      --white:   #F5F0E8;
+      --muted:   #888;
+      --border:  rgba(212,175,55,0.18);
+      --ff-display: 'Bebas Neue', sans-serif;
+      --ff-body:    'Inter', sans-serif;
+    }
 
-<meta name="description" content="Kingscape is the ultimate party card game. Challenge your friends, create unforgettable memories and Respect The Cup.">
-<meta property="og:title" content="KINGSCAPE | Respect The Cup">
-<meta property="og:description" content="The Ultimate Party Card Game for unforgettable nights.">
-<meta property="og:image" content="banner.png">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://pandoxofficial12-dev.github.io/KingscapeGame/">
+    html { scroll-behavior: smooth; }
 
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-<meta name="keywords" content="Kings Cup, Party Card Game, Drinking Game, Kingscape, Respect The Cup">
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-size: 1.7rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted); font-size: 0.78rem; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--red); color: var(--white);
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 10px 22px; border-radius: 2px;
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: #e8132f; transform: translateY(-1px); }
 
-<meta name="author" content="Kingscape">
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+      text-align: center;
+    }
 
-<meta name="theme-color" content="#ff0000">
-<link rel="icon" type="image/png" href="favicon.png">
+    /* radial glow */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 40%, rgba(200,16,46,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 50% 40%, rgba(212,175,55,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
 
-<link rel="stylesheet" href="style.css">
+    /* floating cards */
+    .hero-cards {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .fcard {
+      position: absolute;
+      width: 64px; height: 90px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-display);
+      font-size: 1.6rem;
+      color: var(--gold);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      animation: floatCard linear infinite;
+      opacity: 0.55;
+    }
+    .fcard:nth-child(1)  { left: 8%;  top: 20%; animation-duration: 14s; animation-delay: 0s;   transform: rotate(-12deg); }
+    .fcard:nth-child(2)  { left: 15%; top: 65%; animation-duration: 18s; animation-delay: -5s;  transform: rotate(6deg); }
+    .fcard:nth-child(3)  { left: 78%; top: 18%; animation-duration: 16s; animation-delay: -3s;  transform: rotate(14deg); }
+    .fcard:nth-child(4)  { left: 85%; top: 60%; animation-duration: 12s; animation-delay: -8s;  transform: rotate(-8deg); }
+    .fcard:nth-child(5)  { left: 50%; top: 8%;  animation-duration: 20s; animation-delay: -10s; transform: rotate(3deg); }
+    .fcard:nth-child(6)  { left: 3%;  top: 45%; animation-duration: 15s; animation-delay: -2s;  transform: rotate(-18deg); }
+    .fcard:nth-child(7)  { left: 92%; top: 38%; animation-duration: 13s; animation-delay: -7s;  transform: rotate(20deg); }
+    .fcard:nth-child(8)  { left: 60%; top: 82%; animation-duration: 17s; animation-delay: -4s;  transform: rotate(-5deg); }
 
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px)    rotate(var(--r, -12deg)); }
+      50%       { transform: translateY(-18px)  rotate(var(--r, -12deg)); }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid var(--red-dim);
+      padding: 6px 14px; border-radius: 2px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow span { width: 5px; height: 5px; background: var(--red); border-radius: 50%; display: inline-block; }
+
+    .hero-logo {
+      width: clamp(80px, 14vw, 130px);
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 24px rgba(212,175,55,0.35));
+    }
+
+    .hero h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(5rem, 16vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      text-shadow: 0 0 60px rgba(200,16,46,0.25);
+    }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+
+    .hero-tagline {
+      margin: 20px 0 36px;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      font-weight: 300;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+    .btn-primary {
+      background: var(--red); color: var(--white);
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 16px 32px; border-radius: 2px;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 0 0 0 rgba(200,16,46,0);
+    }
+    .btn-primary:hover {
+      background: #e8132f; transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(200,16,46,0.35);
+    }
+
+    .btn-secondary {
+      background: transparent; color: var(--gold);
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 16px 32px; border-radius: 2px;
+      border: 1px solid var(--gold-dim);
+      transition: background .2s, border-color .2s, transform .15s;
+    }
+    .btn-secondary:hover {
+      background: rgba(212,175,55,0.08);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+      margin-top: 60px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat strong {
+      display: block;
+      font-family: var(--ff-display);
+      font-size: 2.2rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ─── SECTION COMMONS ─── */
+    section { padding: 100px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .section-title em { color: var(--gold); font-style: normal; }
+    .section-sub {
+      font-size: 1rem; color: var(--muted); max-width: 520px;
+      font-weight: 300; line-height: 1.7;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ─── WHAT'S INSIDE ─── */
+    .inside { background: var(--deep); }
+    .inside-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .inside-image img {
+      width: 100%; border-radius: 4px;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .inside-features { display: flex; flex-direction: column; gap: 28px; }
+    .feature-item { display: flex; gap: 16px; align-items: flex-start; }
+    .feature-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: grid; place-items: center;
+      font-size: 1.3rem;
+      background: var(--card-bg);
+    }
+    .feature-item h3 {
+      font-family: var(--ff-display);
+      font-size: 1.2rem; letter-spacing: 0.07em;
+      color: var(--white); margin-bottom: 4px;
+    }
+    .feature-item p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─── CARDS RULES ─── */
+    .rules { background: var(--black); }
+    .rules-header { margin-bottom: 60px; }
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2px;
+    }
+    .rule-card {
+      background: var(--card-bg);
+      padding: 28px;
+      border: 1px solid var(--border);
+      transition: background .2s, border-color .2s, transform .2s;
+      cursor: default;
+    }
+    .rule-card:hover {
+      background: #1e1e1e;
+      border-color: rgba(212,175,55,0.4);
+      transform: translateY(-3px);
+    }
+    .rule-rank {
+      font-family: var(--ff-display);
+      font-size: 3rem; line-height: 1;
+      color: var(--gold); opacity: 0.5;
+      margin-bottom: 10px;
+    }
+    .rule-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.1rem; letter-spacing: 0.08em;
+      color: var(--white); margin-bottom: 6px;
+    }
+    .rule-names { font-size: 0.72rem; color: var(--red); letter-spacing: 0.06em; margin-bottom: 10px; }
+    .rule-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .rule-card img {
+      width: 100%; border-radius: 3px; margin-bottom: 14px;
+      border: 1px solid var(--border);
+    }
+
+    /* ─── HOW TO PLAY ─── */
+    .howto { background: var(--deep); }
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 60px;
+      border: 1px solid var(--border);
+    }
+    .step {
+      padding: 40px 32px;
+      border-right: 1px solid var(--border);
+    }
+    .step:last-child { border-right: none; }
+    .step-num {
+      font-family: var(--ff-display);
+      font-size: 5rem; color: var(--red); opacity: 0.2;
+      line-height: 1; margin-bottom: 12px;
+    }
+    .step h3 {
+      font-family: var(--ff-display);
+      font-size: 1.4rem; letter-spacing: 0.07em;
+      color: var(--white); margin-bottom: 8px;
+    }
+    .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials { background: var(--black); }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 60px;
+    }
+    .testi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 32px;
+      border-radius: 2px;
+    }
+    .testi-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 3px; }
+    .testi-card blockquote {
+      font-size: 0.95rem; line-height: 1.7;
+      color: var(--white); font-style: italic;
+      opacity: 0.85;
+      border-left: 2px solid var(--red);
+      padding-left: 16px;
+    }
+
+    /* ─── BUY ─── */
+    .buy { background: var(--deep); }
+    .buy-inner {
+      background: linear-gradient(135deg, var(--card-bg) 0%, #1a0a0e 100%);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 70px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .buy-perks { display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
+    .perk { display: flex; gap: 12px; align-items: flex-start; }
+    .perk-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+    .perk p { font-size: 0.88rem; color: var(--muted); }
+    .perk strong { color: var(--white); display: block; font-size: 0.92rem; margin-bottom: 2px; }
+
+    .buy-cta-side { text-align: center; }
+    .buy-cta-side img { width: 100%; max-width: 320px; border-radius: 4px; margin-bottom: 32px; }
+    .buy-badges {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      margin-bottom: 28px;
+    }
+    .badge {
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid var(--gold-dim);
+      padding: 5px 12px; border-radius: 2px;
+    }
+
+    /* ─── FAQ ─── */
+    .faq { background: var(--black); }
+    .faq-list { margin-top: 60px; max-width: 720px; }
+    .faq-item {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    .faq-item:last-child { border-bottom: 1px solid var(--border); }
+    .faq-item h3 {
+      font-family: var(--ff-display);
+      font-size: 1.15rem; letter-spacing: 0.06em;
+      color: var(--white); margin-bottom: 8px;
+    }
+    .faq-item p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      padding: 56px 40px 36px;
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 32px;
+      max-width: 1100px; margin: 0 auto;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-brand { max-width: 280px; }
+    .footer-logo {
+      font-family: var(--ff-display);
+      font-size: 2.2rem; letter-spacing: 0.1em;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .footer-brand p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+    .footer-links { display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-links h4 { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
+    .footer-bottom {
+      max-width: 1100px; margin: 28px auto 0;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.75rem; color: var(--muted); }
+    .footer-warning { font-size: 0.72rem; color: var(--red-dim); letter-spacing: 0.06em; }
+
+    /* ─── FLOATING CTA ─── */
+    .float-cta {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      background: var(--red); color: var(--white);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 14px 24px; border-radius: 2px;
+      box-shadow: 0 8px 30px rgba(200,16,46,0.4);
+      transition: background .2s, transform .15s;
+    }
+    .float-cta:hover { background: #e8132f; transform: translateY(-2px); }
+
+    /* ─── BANNER ─── */
+    .ticker {
+      background: var(--red);
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 20s linear infinite;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      font-weight: 600;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .inside-grid { grid-template-columns: 1fr; }
+      .steps-row { grid-template-columns: 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--border); }
+      .step:last-child { border-bottom: none; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .buy-inner { grid-template-columns: 1fr; padding: 40px 28px; }
+      footer { padding: 40px 20px 28px; }
+      .footer-top { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fcard, .ticker-inner { animation: none; }
+    }
+  </style>
 </head>
-
 <body>
 
-<header class="hero">
-
-<img src="banner.png" class="banner" alt="Kingscape Banner">
-
-<div class="hero-content">
-
-<img src="profile.png" class="logo" alt="Kingscape Logo">
-
-<h1>KINGSCAPE</h1>
-
-<h2>RESPECT THE CUP</h2>
-
-<p class="subtitle">
-The Ultimate Party Card Game built for unforgettable nights,
-crazy challenges and legendary memories.
-</p>
-
-<div class="buttons">
-
-<a href="https://wa.me/14246452113" target="_blank" class="btn-red">
-GET YOUR DECK NOW
-</a>
-
-<a href="https://instagram.com/KingscapeGame" target="_blank" class="btn-outline">
-INSTAGRAM
-</a>
-
-<a href="#game-rules" class="btn-outline">
-LEARN THE RULES
-</a>
-
-</div>
-
-<div class="stats">
-<div>👥 3-8 Players</div>
-<div>🔞 21+</div>
-<div>⏱ 30-60 Minutes</div>
-<div>📍 Los Angeles</div>
-</div>
-
-</div>
-<div class="trust-bar">
-🔥 LIMITED LAUNCH • LOS ANGELES • FIRST EDITION AVAILABLE NOW
-</div>
-
-<div>🎴 52 Custom Cards</div>
-
-<div>🚚 Fast Shipping</div>
-
-<div>⭐ Premium Quality</div>
-
-<div>👑 Limited Launch Edition</div>
-
-</div>
-
-</header>
-
-<section class="section">
-
-<h2>What's Inside The Box</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>🎴 Premium Deck</h3>
-<p>52 custom cards with unique challenges, rules and unforgettable moments.</p>
-</div>
-
-<div class="card">
-<h3>🍻 Epic Challenges</h3>
-<p>Questions, dares, strategy and chaos.</p>
-</div>
-
-<div class="card">
-<h3>👑 Respect The Cup</h3>
-<p>One rule. Endless memories.</p>
-</div>
-
-</div>
-
-<img src="box.png" class="full-image">
-
-</section>
-<section class="section">
-
-<h2>Why Players Love Kingscape</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>🔥 Easy To Learn</h3>
-<p>
-Start playing in minutes.
-Simple rules, endless fun.
-</p>
-</div>
-
-<div class="card">
-<h3>👑 Endless Replayability</h3>
-<p>
-Every game feels different.
-No two nights are ever the same.
-</p>
-</div>
-
-<div class="card">
-<h3>🍻 Perfect For Parties</h3>
-<p>
-Built for unforgettable nights,
-laughs and legendary moments.
-</p>
-</div>
-
-<div class="card">
-<h3>🎯 Competitive & Hilarious</h3>
-<p>
-The perfect balance between
-strategy, chaos and fun.
-</p>
-</div>
-
-</div>
-
-</section>
-  
-<section class="section">
-
-<h2>Featured Cards</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>👑 The Curse</h3>
-<p>
-One of the most feared cards in Kingscape.
-A game-changing challenge that nobody wants to draw.
-</p>
-</div>
-
-<div class="card">
-<h3>🧠 Brain Rush</h3>
-<p>
-Think fast.
-Hesitate and face the consequences.
-</p>
-</div>
-
-<div class="card">
-<h3>⚖️ The Law</h3>
-<p>
-A new rule enters the game.
-Break it and pay the price.
-</p>
-</div>
-
-<div class="card">
-<h3>❓ Keep Asking</h3>
-<p>
-Questions become weapons.
-Answer wrong and regret it.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2>How To Play</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>1️⃣ Draw A Card</h3>
-<p>Take turns drawing cards from the deck.</p>
-</div>
-
-<div class="card">
-<h3>2️⃣ Follow The Rule</h3>
-<p>Each card triggers a challenge, rule or action.</p>
-</div>
-
-<div class="card">
-<h3>3️⃣ Respect The Cup</h3>
-<p>Avoid becoming the last King and drinking the King's Cup.</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="game-rules" class="section">
-
-<h2>Game Rules</h2>
-
-<div class="rules-grid">
-
-
-<div class="rule-card">
-<img src="a.jpg" class="rule-image" alt="Kingscape Dominion Card Rule">
-<h3>A — Dominion Cards</h3>
-<p><strong>Cards:</strong> Wave • Control • Flow • Chaos</p>
-<p><strong>Rule:</strong> Everyone drinks while you drink. When you stop, everyone stops.</p>
-</div>
-
-<div class="rule-card">
-<img src="2.jpg" class="rule-image" alt="Kingscape Call Out Card Rule">
-<h3>2 — Call Out Cards</h3>
-<p><strong>Cards:</strong> Call Out • Marked • Pick • Locked</p>
-<p><strong>Rule:</strong> Choose any player. They must take 2 shots.</p>
-</div>
-
-<div class="rule-card">
-<img src="3.jpg" class="rule-image" alt="Kingscape Bottoms Up Card Rule">
-<h3>3 — Bottoms Up Cards</h3>
-<p><strong>Cards:</strong> Bottoms Up • Penalty • Rhythm • No Mercy</p>
-<p><strong>Rule:</strong> Take 3 shots.</p>
-</div>
-
-<div class="rule-card">
-<img src="4.jpg" class="rule-image" alt="Kingscape Group Cheers Card Rule">
-<h3>4 — Group Cheers Cards</h3>
-<p><strong>Cards:</strong> Group Cheers • King's Choice • Dance Floor • Take It</p>
-<p><strong>Rule:</strong> Take 2 shots and give 2 shots to any player.</p>
-</div>
-
-<div class="rule-card">
-<img src="5.jpg" class="rule-image" alt="Kingscape Ladies Card Rule">
-<h3>5 — Ladies Cards</h3>
-<p><strong>Cards:</strong> Ladies • Queens • Girls Night • She Rules</p>
-<p><strong>Rule:</strong> All women drink.</p>
-</div>
-
-<div class="rule-card">
-<img src="6.jpg" class="rule-image" alt="Kingscape Men Card Rule">
-<h3>6 — Men Cards</h3>
-<p><strong>Cards:</strong> Man Up • Men Drink • Bro Code • Man's Turn</p>
-<p><strong>Rule:</strong> All men drink.</p>
-</div>
-
-<div class="rule-card">
-<img src="7.jpg" class="rule-image" alt="Kingscape Last Hand Up Card Rule">
-<h3>7 — Last Hand Up Cards</h3>
-<p><strong>Cards:</strong> Seven Heaven • Last One Up • Last To Raise • Last Hand Up</p>
-<p><strong>Rule:</strong> Last player to raise a hand takes 1 shot.</p>
-</div>
-
-<div class="rule-card">
-<img src="8.jpg" class="rule-image" alt="Kingscape Follow Me Card Rule">
-<h3>8 — Follow Me Cards</h3>
-<p><strong>Cards:</strong> Follow Me • Control Point • Copycat • Trap</p>
-<p><strong>Rule:</strong> Last player to copy the finger action takes 1 shot.</p>
-</div>
-
-<div class="rule-card">
-<img src="9.jpg" class="rule-image" alt="Kingscape Rhyme Time Card Rule">
-<h3>9 — Rhyme Time Cards</h3>
-<p><strong>Cards:</strong> Rhyme Time • Word Duel • Flow Game • Last Word</p>
-<p><strong>Rule:</strong> Players must say rhyming words. Mistakes take 1 shot.</p>
-</div>
-
-<div class="rule-card">
-<img src="10.jpg" class="rule-image" alt="Kingscape Category Card Rule">
-<h3>10 — Category Cards</h3>
-<p><strong>Cards:</strong> Quick Think • Category King • Brain Rush • No Repeats</p>
-<p><strong>Rule:</strong> Name items from a category. Mistakes take 1 shot.</p>
-</div>
-
-<div class="rule-card">
-<img src="j.jpg" class="rule-image" alt="Kingscape House Rule Card">
-<h3>J — House Rule Cards</h3>
-<p><strong>Cards:</strong> House Rule • Last Call • The Law • The Decree</p>
-<p><strong>Rule:</strong> Create a new rule everyone must follow.</p>
-</div>
-
-<div class="rule-card">
-<img src="q.jpg" class="rule-image" alt="Kingscape Question Card Rule">
-<h3>Q — Question Cards</h3>
-<p><strong>Cards:</strong> Question Loop • Don't Answer • Keep Asking • Wrong Move</p>
-<p><strong>Rule:</strong> Ask questions without answering. Failure takes 1 shot.</p>
-</div>
-
-<div class="rule-card">
-<img src="k.jpg" class="rule-image" alt="Kingscape King's Cup Card Rule">
-<h3>K — King's Cup Cards</h3>
-<p><strong>Cards:</strong> The Cup • Last King • Royal Mix • The Curse</p>
-<p><strong>Rule:</strong> Add your drink to the King's Cup. The last King drinks it all.</p>
-</div>
-  
-</div>
-
-</section>
-  
-<section class="section">
-<h2>The Deck</h2>
-<div class="card-counter">
-
-<div class="counter-number">52</div>
-
-<div class="counter-text">Cards Included</div>
-
-</div>
-<p>
-52 unique cards.
-Every draw changes the game.
-</p>
-
-<img src="deck.png" class="full-image">
-
-</section>
-
-<section class="section">
-
-<h2>Experience Kingscape</h2>
-
-<p>
-More than a game.
-A legendary night with friends.
-</p>
-
-<img src="lifestyle.png" class="full-image">
-
-</section>
-
-<section class="section">
-
-<h2>What Players Say</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>⭐⭐⭐⭐⭐</h3>
-<p>
-"Best party game we've played all year.
-Everyone ended up laughing."
-</p>
-</div>
-
-<div class="card">
-<h3>⭐⭐⭐⭐⭐</h3>
-<p>
-"The perfect mix of strategy,
-chaos and drinking."
-</p>
-</div>
-
-<div class="card">
-<h3>⭐⭐⭐⭐⭐</h3>
-<p>
-"We bought one deck and immediately ordered another."
-</p>
-</div>
-
-</div>
-
-</section>
-<section class="section">
-
-<h2>Why Buy Kingscape?</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>🚚 Fast Shipping</h3>
-<p>
-Quick delivery across Los Angeles and surrounding areas.
-</p>
-</div>
-
-<div class="card">
-<h3>🎁 Perfect Gift</h3>
-<p>
-An unforgettable gift for parties, birthdays and celebrations.
-</p>
-</div>
-
-<div class="card">
-<h3>⭐ Premium Quality</h3>
-<p>
-Designed to survive countless legendary game nights.
-</p>
-</div>
-
-</div>
-
-</section>
-  <section class="section">
-
-<div class="card">
-
-<h3>🔥 First Edition Launch</h3>
-
-<p>
-Limited first production run available now.
-Get yours before they're gone.
-</p>
-
-</div>
-
-</section>
-<section class="section">
-
-<h2>Why 52 Cards?</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>🎴 52 Unique Cards</h3>
-<p>
-Every card introduces a different challenge,
-rule or twist.
-</p>
-</div>
-
-<div class="card">
-<h3>♾ Endless Combinations</h3>
-<p>
-No two games are ever exactly the same.
-</p>
-</div>
-
-<div class="card">
-<h3>👑 4 Kings</h3>
-<p>
-Avoid becoming the last King and facing
-The King's Cup.
-</p>
-</div>
-
-<div class="card">
-<h3>🔥 Built For Replayability</h3>
-<p>
-Play again and again without the game
-feeling repetitive.
-</p>
-</div>
-
-</div>
-
-</section>
-  <section class="section">
-
-<div class="card">
-
-<h2>Limited Launch Edition</h2>
-
-<p>
-Kingscape is currently launching in Los Angeles.
-
-Be among the first players to own the original edition and start legendary game nights with your friends.
-</p>
-
-</div>
-
-</section>
-  
-<section class="section">
-  
-<h2>Available Now</h2>
-
-<div class="card">
-
-<h3>📍 Los Angeles, California</h3>
-
-<p>
-Kingscape is now available in Los Angeles.
-
-Gather your friends, Respect The Cup and create unforgettable memories.
-
-Order directly through WhatsApp or Instagram.
-</p>
-
-<br>
-
-<p>
-🔞 21+ Only
-</p>
-<p>
-🎴 52 Unique Cards
-</p>
-
-<p>
-👥 3–8 Players
-</p>
-
-<p>
-⏱ 30–60 Minutes
-</p>
-<br>
-
-<div class="buttons">
-
-<a href="https://wa.me/14246452113" target="_blank" class="btn-red">
-GET YOUR DECK NOW
-</a>
-
-<a href="https://instagram.com/KingscapeGame" target="_blank" class="btn-outline">
-INSTAGRAM
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2>Frequently Asked Questions</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>How many players can play?</h3>
-<p>
-Kingscape is designed for 3 to 8 players.
-</p>
-</div>
-
-<div class="card">
-<h3>How long does a game last?</h3>
-<p>
-Most games last between 30 and 60 minutes.
-</p>
-</div>
-
-<div class="card">
-<h3>Do I need a standard deck?</h3>
-<p>
-No. Everything you need is included inside the Kingscape deck.
-</p>
-</div>
-
-<div class="card">
-<h3>Is it beginner friendly?</h3>
-<p>
-Absolutely. The rules are simple and easy to learn.
-</p>
-</div>
-
-<div class="card">
-<h3>Is Kingscape only for drinking?</h3>
-<p>
-Players can adapt challenges and penalties however they like.
-</p>
-</div>
-
-<div class="card">
-<h3>Where can I order?</h3>
-<p>
-You can order directly through WhatsApp or Instagram.
-</p>
-</div>
-
-</div>
-
-</section>
-<section id="contact" class="section">
-<h2>Contact</h2>
-
-<p>📧 Kingscapegame@gmail.com</p>
-
-<p>📸 @KingscapeGame</p>
-
-<p>📞 +1 (424) 645-2113</p>
-
-</section>
-
-<footer>
-
-<p>21+ ONLY</p>
-
-<p>Drink Responsibly</p>
-
-<p>Never Drink and Drive</p>
-
-<p>© 2026 KINGSCAPE</p>
-
-</footer>
-
-<div id="imageModal" class="image-modal">
-  <span class="close-modal">&times;</span>
-  <img class="modal-content" id="modalImage">
-</div>  
-  
-<script src="script.js"></script>
-
-<a href="https://wa.me/14246452113" target="_blank" class="whatsapp-float">
-💬 GET YOUR DECK NOW
-</a>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">KINGSCAPE</a>
+    <ul class="nav-links">
+      <li><a href="#rules">Rules</a></li>
+      <li><a href="#how-to-play">How To Play</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="nav-cta" href="https://wa.me/14246452113" target="_blank">Order Now</a>
+  </nav>
+
+  <!-- TICKER -->
+  <div class="ticker" style="margin-top:64px;">
+    <span class="ticker-inner">
+      🎴 LIMITED FIRST EDITION &nbsp;·&nbsp; LOS ANGELES &nbsp;·&nbsp; RESPECT THE CUP &nbsp;·&nbsp;
+      52 UNIQUE CARDS &nbsp;·&nbsp; 3–8 PLAYERS &nbsp;·&nbsp; FAST SHIPPING &nbsp;·&nbsp;
+      🎴 LIMITED FIRST EDITION &nbsp;·&nbsp; LOS ANGELES &nbsp;·&nbsp; RESPECT THE CUP &nbsp;·&nbsp;
+      52 UNIQUE CARDS &nbsp;·&nbsp; 3–8 PLAYERS &nbsp;·&nbsp; FAST SHIPPING &nbsp;·&nbsp;
+    </span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-cards" aria-hidden="true">
+      <div class="fcard">K</div>
+      <div class="fcard">A</div>
+      <div class="fcard">Q</div>
+      <div class="fcard">J</div>
+      <div class="fcard">7</div>
+      <div class="fcard">2</div>
+      <div class="fcard">10</div>
+      <div class="fcard">K</div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span></span> First Edition · Los Angeles · 2026 <span></span></div>
+      <img class="hero-logo" src="profile.png" alt="Kingscape" />
+      <h1>KING<em>SCAPE</em></h1>
+      <p class="hero-tagline">The ultimate party card game for unforgettable nights,<br />legendary challenges, and nights you'll never forget.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://wa.me/14246452113" target="_blank">💬 Get Your Deck</a>
+        <a class="btn-secondary" href="#rules">Learn The Rules</a>
+        <a class="btn-secondary" href="https://instagram.com/KingscapeGame" target="_blank">Instagram</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>52</strong><span>Unique Cards</span></div>
+        <div class="hero-stat"><strong>3–8</strong><span>Players</span></div>
+        <div class="hero-stat"><strong>30–60</strong><span>Minutes</span></div>
+        <div class="hero-stat"><strong>21+</strong><span>Age</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- WHAT'S INSIDE -->
+  <section class="inside">
+    <div class="container">
+      <p class="section-label">The Deck</p>
+      <h2 class="section-title">WHAT'S INSIDE<br /><em>THE BOX</em></h2>
+      <p class="section-sub">Every detail of Kingscape was built to turn any night into a legendary memory.</p>
+      <div class="inside-grid">
+        <div class="inside-image">
+          <img src="box.png" alt="Kingscape box" />
+        </div>
+        <div class="inside-features">
+          <div class="feature-item">
+            <div class="feature-icon">🎴</div>
+            <div>
+              <h3>Premium Deck</h3>
+              <p>52 custom cards, each with a unique challenge, rule, or twist. Durable and built for repeated legendary nights.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🍻</div>
+            <div>
+              <h3>Epic Challenges</h3>
+              <p>Questions, dares, strategy, and chaos — every draw changes the dynamic of the game.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">👑</div>
+            <div>
+              <h3>Respect The Cup</h3>
+              <p>One rule. One cup. Avoid being the last King or face the King's Cup. Simple. Ruthless.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔥</div>
+            <div>
+              <h3>First Edition</h3>
+              <p>Limited first production run available only in Los Angeles. Once they're gone, they're gone.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- RULES -->
+  <section class="rules" id="rules">
+    <div class="container">
+      <p class="section-label">The Rules</p>
+      <h2 class="section-title">GAME<br /><em>RULES</em></h2>
+      <p class="section-sub">13 card types. Infinite chaos. One winner.</p>
+      <div class="rules-grid" style="margin-top:60px;">
+
+        <div class="rule-card">
+          <img src="a.jpg" alt="Dominion Cards" />
+          <div class="rule-rank">A</div>
+          <h3>Dominion</h3>
+          <div class="rule-names">Wave · Control · Flow · Chaos</div>
+          <p>Everyone drinks while you drink. When you stop, everyone stops.</p>
+        </div>
+        <div class="rule-card">
+          <img src="2.jpg" alt="Call Out Cards" />
+          <div class="rule-rank">2</div>
+          <h3>Call Out</h3>
+          <div class="rule-names">Call Out · Marked · Pick · Locked</div>
+          <p>Choose any player. They must take 2 shots.</p>
+        </div>
+        <div class="rule-card">
+          <img src="3.jpg" alt="Bottoms Up Cards" />
+          <div class="rule-rank">3</div>
+          <h3>Bottoms Up</h3>
+          <div class="rule-names">Bottoms Up · Penalty · Rhythm · No Mercy</div>
+          <p>Take 3 shots. No negotiations.</p>
+        </div>
+        <div class="rule-card">
+          <img src="4.jpg" alt="Group Cheers Cards" />
+          <div class="rule-rank">4</div>
+          <h3>Group Cheers</h3>
+          <div class="rule-names">Group Cheers · King's Choice · Dance Floor</div>
+          <p>Take 2 shots and give 2 shots to any player.</p>
+        </div>
+        <div class="rule-card">
+          <img src="5.jpg" alt="Ladies Cards" />
+          <div class="rule-rank">5</div>
+          <h3>Ladies</h3>
+          <div class="rule-names">Ladies · Queens · Girls Night · She Rules</div>
+          <p>All women drink.</p>
+        </div>
+        <div class="rule-card">
+          <img src="6.jpg" alt="Men Cards" />
+          <div class="rule-rank">6</div>
+          <h3>Men</h3>
+          <div class="rule-names">Man Up · Men Drink · Bro Code</div>
+          <p>All men drink.</p>
+        </div>
+        <div class="rule-card">
+          <img src="7.jpg" alt="Last Hand Up Cards" />
+          <div class="rule-rank">7</div>
+          <h3>Last Hand Up</h3>
+          <div class="rule-names">Seven Heaven · Last One Up · Last Hand Up</div>
+          <p>Last player to raise a hand takes 1 shot.</p>
+        </div>
+        <div class="rule-card">
+          <img src="8.jpg" alt="Follow Me Cards" />
+          <div class="rule-rank">8</div>
+          <h3>Follow Me</h3>
+          <div class="rule-names">Follow Me · Control Point · Copycat · Trap</div>
+          <p>Last player to copy the finger action takes 1 shot.</p>
+        </div>
+        <div class="rule-card">
+          <img src="9.jpg" alt="Rhyme Time Cards" />
+          <div class="rule-rank">9</div>
+          <h3>Rhyme Time</h3>
+          <div class="rule-names">Rhyme Time · Word Duel · Flow Game</div>
+          <p>Say rhyming words. Hesitate and take 1 shot.</p>
+        </div>
+        <div class="rule-card">
+          <img src="10.jpg" alt="Category Cards" />
+          <div class="rule-rank">10</div>
+          <h3>Category</h3>
+          <div class="rule-names">Quick Think · Category King · Brain Rush</div>
+          <p>Name items from a category. Mistakes take 1 shot.</p>
+        </div>
+        <div class="rule-card">
+          <img src="j.jpg" alt="House Rule Cards" />
+          <div class="rule-rank">J</div>
+          <h3>House Rule</h3>
+          <div class="rule-names">House Rule · Last Call · The Law · The Decree</div>
+          <p>Create a new rule everyone must follow.</p>
+        </div>
+        <div class="rule-card">
+          <img src="q.jpg" alt="Question Cards" />
+          <div class="rule-rank">Q</div>
+          <h3>Questions</h3>
+          <div class="rule-names">Question Loop · Don't Answer · Keep Asking</div>
+          <p>Ask questions without answering. Failure takes 1 shot.</p>
+        </div>
+        <div class="rule-card" style="border-color: rgba(200,16,46,0.4);">
+          <img src="k.jpg" alt="King's Cup Cards" />
+          <div class="rule-rank" style="color:var(--red);opacity:0.8;">K</div>
+          <h3>King's Cup</h3>
+          <div class="rule-names">The Cup · Last King · Royal Mix · The Curse</div>
+          <p>Add your drink. The last King drinks the entire cup.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- HOW TO PLAY -->
+  <section class="howto" id="how-to-play">
+    <div class="container">
+      <p class="section-label">Getting Started</p>
+      <h2 class="section-title">HOW TO<br /><em>PLAY</em></h2>
+      <p class="section-sub">Start playing in minutes. No rules to memorize, no setup required.</p>
+      <div class="steps-row">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Draw A Card</h3>
+          <p>Players take turns drawing cards from the deck, one at a time, going around the circle.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Follow The Rule</h3>
+          <p>Each card triggers a challenge, action, or new rule that everyone must follow immediately.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Respect The Cup</h3>
+          <p>Avoid drawing the final King — the last one to draw drinks the entire King's Cup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <p class="section-label">Players Say</p>
+      <h2 class="section-title">WHAT PEOPLE<br /><em>ARE SAYING</em></h2>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <blockquote>Best party game we've played all year. Everyone ended up laughing the entire night.</blockquote>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <blockquote>The perfect mix of strategy, chaos and fun. Nothing else comes close at a party.</blockquote>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <blockquote>We bought one deck and immediately ordered another. It never gets old.</blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- BUY -->
+  <section class="buy" id="order">
+    <div class="container">
+      <p class="section-label">Available Now</p>
+      <h2 class="section-title">GET YOUR<br /><em>DECK</em></h2>
+      <p class="section-sub">Order directly through WhatsApp or Instagram. Fast delivery across Los Angeles.</p>
+      <div class="buy-inner">
+        <div>
+          <h3 style="font-family:var(--ff-display);font-size:1.8rem;letter-spacing:.06em;color:var(--white);margin-bottom:6px;">First Edition Launch</h3>
+          <p style="font-size:.9rem;color:var(--muted);margin-bottom:28px;">Limited first production run. Los Angeles only. Once they're gone — they're gone.</p>
+          <div class="buy-perks">
+            <div class="perk"><div class="perk-dot"></div><div><strong>🚚 Fast Shipping</strong><p>Quick delivery across Los Angeles and surrounding areas.</p></div></div>
+            <div class="perk"><div class="perk-dot"></div><div><strong>⭐ Premium Quality</strong><p>Designed to survive countless legendary game nights.</p></div></div>
+            <div class="perk"><div class="perk-dot"></div><div><strong>🎁 Perfect Gift</strong><p>Unforgettable for parties, birthdays and celebrations.</p></div></div>
+            <div class="perk"><div class="perk-dot"></div><div><strong>👑 Limited Edition</strong><p>First production run — own a piece of the first chapter.</p></div></div>
+          </div>
+        </div>
+        <div class="buy-cta-side">
+          <img src="deck.png" alt="Kingscape deck" />
+          <div class="buy-badges">
+            <span class="badge">🎴 52 Cards</span>
+            <span class="badge">👥 3–8 Players</span>
+            <span class="badge">⏱ 30–60 min</span>
+            <span class="badge">📍 Los Angeles</span>
+          </div>
+          <a class="btn-primary" style="display:block;padding:18px 0;font-size:.85rem;width:100%;" href="https://wa.me/14246452113" target="_blank">💬 ORDER ON WHATSAPP</a>
+          <a class="btn-secondary" style="display:block;padding:16px 0;font-size:.85rem;width:100%;margin-top:12px;text-align:center;" href="https://instagram.com/KingscapeGame" target="_blank">📸 INSTAGRAM</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <p class="section-label">Common Questions</p>
+      <h2 class="section-title">FAQ</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>How Many Players Can Play?</h3>
+          <p>Kingscape is designed for 3 to 8 players. Best with 5 or more for maximum chaos.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How Long Does A Game Last?</h3>
+          <p>Most games last between 30 and 60 minutes depending on the group.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do I Need Anything Else?</h3>
+          <p>No. Everything you need is included inside the Kingscape deck. Just bring friends and drinks.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is It Beginner Friendly?</h3>
+          <p>Absolutely. Rules are simple and explained on every card. Start playing in minutes.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Where Can I Order?</h3>
+          <p>Order directly through WhatsApp at +1 (424) 645-2113 or DM on Instagram @KingscapeGame.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is Kingscape Only For Drinking?</h3>
+          <p>Players can adapt challenges and penalties however they like. The game is flexible for any group.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">KINGSCAPE</div>
+        <p>The ultimate party card game. 52 custom cards. Unforgettable nights. Respect The Cup.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="footer-links">
+          <a href="mailto:Kingscapegame@gmail.com">Kingscapegame@gmail.com</a>
+          <a href="tel:+14246452113">+1 (424) 645-2113</a>
+          <a href="https://instagram.com/KingscapeGame" target="_blank">@KingscapeGame</a>
+        </div>
+      </div>
+      <div>
+        <h4>Order</h4>
+        <div class="footer-links">
+          <a href="https://wa.me/14246452113" target="_blank">WhatsApp</a>
+          <a href="https://instagram.com/KingscapeGame" target="_blank">Instagram DM</a>
+          <a href="#rules">Game Rules</a>
+          <a href="#faq">FAQ</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 KINGSCAPE. All rights reserved.</p>
+      <p class="footer-warning">🔞 21+ ONLY · Drink Responsibly · Never Drink and Drive</p>
+    </div>
+  </footer>
+
+  <!-- FLOATING CTA -->
+  <a class="float-cta" href="https://wa.me/14246452113" target="_blank">💬 Get Your Deck</a>
 
 </body>
 </html>
