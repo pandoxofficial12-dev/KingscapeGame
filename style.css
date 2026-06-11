@@ -459,3 +459,12 @@ font-size:14px;
 font-weight:600;
 backdrop-filter:blur(10px);
 }
+.launch-banner{
+background:#ff0000;
+color:white;
+font-weight:700;
+padding:12px;
+text-align:center;
+letter-spacing:1px;
+text-transform:uppercase;
+}
